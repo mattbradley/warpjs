@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <title>Warp.js</title>
+  </head>
+  <body>
+    <span id="time"></span>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+    <script src="warp.js"></script>
+    <script>
+      setInterval(function() {
+        var now = new Date;
+        $('#time').html([
+          now.getFullYear(),
+          now.getMonth() + 1,
+          now.getDate(),
+          '<br />',
+          now.getHours(),
+          now.getMinutes(),
+          now.getSeconds(),
+          now.getMilliseconds()].join('<br />')
+        );
+      }, 20);
+    </script>
+  </body>
+</html>
