@@ -1,5 +1,5 @@
 (function() {
-  var factor = 1,
+  var tickSpeed = 1,
       date = Date,
       now = Date.now || function() { return +new Date; },
       then = now(),
@@ -7,7 +7,7 @@
 
   warpTimestamp = function() {
     var rightNow = now();
-    then += (rightNow - when) * factor;
+    then += (rightNow - when) * tickSpeed;
     when = rightNow;
     return then;
   },
@@ -46,12 +46,12 @@
     off: function() {
       Date = date;
     },
-    setFactor: function(warpFactor) {
-      factor = warpFactor;
+    setSpeed: function(speed) {
+      tickSpeed = speed;
       warpTimestamp();
     },
     reset: function() {
-      factor = 1;
+      tickSpeed = 1;
       when = then = now();
     },
     setDate: function(newDate) {
@@ -60,7 +60,7 @@
       else if (newDate instanceof date)
         then = +newDate;
     },
-    dateObject: Date
+    date: Date
   };
 
   Date = warped;
