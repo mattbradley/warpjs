@@ -16,9 +16,8 @@ Usage
 Warp.js adds a `Date.warp` object that includes functions to control the
 JavaScript clock. These functions allow you to set the time and date of the
 clock and control how fast the clock ticks. Also, the `Date.now()` function and
-`new Date()` constructor are replaced. These will now return a warped timestamp
-or `Date` object based on the time and date that was set and the clock tick
-speed.
+`new Date()` constructor are replaced. These will now return a *warped*
+timestamp or `Date` object based on the clock tick speed and the set datetime.
 
 ### `Date.now([unwarped])`
 
@@ -49,7 +48,7 @@ returned `Date` object will represent the current *unwarped* date and time.
 ### `Date.warp.setDate(date)`
 
 The `setDate()` function sets the warped date and time of the clock. The `date`
-argument can be either a integer timestamp or a `Date` object. Once the clock
+argument can be either an integer timestamp or a `Date` object. Once the clock
 has been set with this function, calls to `Date.now()` or `new Date()` will
 report dates starting from the set date.
 
