@@ -3,7 +3,7 @@
       mo = 'months',
       w = 'weeks',
       d = 'days',
-      h = 'hours'
+      h = 'hours',
       m = 'minutes',
       s = 'seconds',
       ms = 'milliseconds',
