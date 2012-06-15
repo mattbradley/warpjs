@@ -42,7 +42,7 @@
 
       tickSpeed = 1,
       date = Date,
-      now = Date.now || function() { return +new Date; },
+      now = Date.now || function() { return +new date; },
       then = now(),
       when = then,
 
@@ -54,8 +54,8 @@
       },
 
       warped = function() {
-        if (!(this instanceof Date))
-          return date();
+        if ((this instanceof Window))
+          return '' + new date(warpTimestamp());
 
         var args = arguments;
         if (args[0] === true)
@@ -68,7 +68,8 @@
           case 3: return new date(args[0], args[1], args[2]);
           case 4: return new date(args[0], args[1], args[2], args[3]);
           case 5: return new date(args[0], args[1], args[2], args[3], args[4]);
-          default: return new date(args[0], args[1], args[2], args[3], args[4], args[5]);
+          case 6: return new date(args[0], args[1], args[2], args[3], args[4], args[5]);
+          default: return new date(args[0], args[1], args[2], args[3], args[4], args[5], args[6]);
         }
       };
 
@@ -92,7 +93,7 @@
       if (typeof amount == 'string') {
         var tokens = amount.match(/(-?(\d+\.?\d*|\d*\.?\d+)[A-Za-z]+)/g);
         amount = { };
-        for (var t in tokens)
+        for (var t = 0; t < tokens.length; t++)
           amount[tokens[t].replace(/[-+.0-9]/g, '')] = parseFloat(tokens[t]);
       }
 
@@ -123,15 +124,20 @@
 
       return then = +newDate;
     },
-    setSpeed: function(speed) {
+    speed: function(speed) {
+      if (speed === undefined)
+        return tickSpeed;
+
       tickSpeed = speed;
       warpTimestamp();
     },
-    setDate: function(newDate) {
-      if (typeof newDate == 'number')
-        then = newDate;
-      else if (newDate instanceof date)
-        then = +newDate;
+    clock: function(arg) {
+      if (arg === undefined)
+        return new date(then);
+
+      var newDate = warped.apply(this, arguments);
+      then = +newDate;
+      return newDate;
     },
     on: function() {
       Date = warped;
