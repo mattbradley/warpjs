@@ -3,7 +3,7 @@ Warp.js
 
 Warp.js improves your JavaScript `Date` object allowing you to change the
 current datetime and control the tick speed. Instead of `new Date()` giving you
-the current, lowsy, depressing date and time, you can set the JavaScript clock
+the current, lousy, depressing date and time, you can set the JavaScript clock
 to whatever date and time you wish! You can also specify how fast the clock
 ticks, making time on your website go by super-fast or extra-slow. You can even
 make time go backwards! Warp.js is great for testing front-end timestamps,
@@ -25,13 +25,14 @@ number of milliseconds since the Unix epoch. Setting the optional `unwarped`
 argument to `true` returns the current *unwarped* timestamp of your computer's
 clock.
 
-### `new Date()` constructor
+### `new Date([...])` constructor
 
-The replaced `Date` constructor can be invoked the [same four ways]
+The replaced `Date` constructor can be invoked the [same ways]
 (http://developer.mozilla.org/en/JavaScript/Reference/Global_Objects/Date)
 that the actual constructor can be invoked:
 
     new Date()
+    new Date(dateObject)
     new Date(millisecond)
     new Date(dateString)
     new Date(year, month, day [, hour, minute, second, millisecond ])
@@ -44,19 +45,30 @@ object that represents the time based on the supplied arguments.
 Similar to the `Date.now()` function, if the first argument is `true`, the
 returned `Date` object will represent the current *unwarped* date and time.
 
-### `Date.warp.setDate(date)`
+### `Date()`
 
-The `setDate()` function sets the warped date and time of the clock. The `date`
-argument can be either an integer timestamp or a `Date` object. Once the clock
-has been set with this function, calls to `Date.now()` or `new Date()` will
-report dates starting from the set date.
+The `Date()` function called without the `new` keyword will not create a new
+`Date` object, but will return a string representation of the current warped
+datetime. This functionality is similar to the standard `Date` object; however,
+the warped `Date()` and unwarped `Date()` may return slightly different
+formatted strings based on how the browser implements the `Date.toString()`
+method.
 
-### `Date.warp.setSpeed(speed)`
+### `Date.warp.clock([...])`
 
-The `setSpeed()` function sets the tick speed of the warped clock. The `speed`
-argument can be thought of as a multiplicative factor: setting the speed to 2
-will make the clock tick at 2 seconds per second -- or twice as fast. Negative
-speeds make the clock tick backwards.
+The `clock()` function gets or sets the warped date and time of the clock.
+Sending no arguments will return the current *warped* `Date` object. This
+function accepts the same arguments as the `new Date()` constructor and will
+set the warped clock based on `Date` object created with those arguments. A
+single argument of `true` will set the clock to the actual unwarped datetime.
+
+### `Date.warp.speed([speed])`
+
+The `speed()` function gets or sets the tick speed of the warped clock. Sending
+no arguments will return the current tick speed. The `speed` argument can be
+thought of as a multiplicative factor: setting the speed to 2 will make the
+clock tick at 2 seconds per second -- or twice as fast. Negative speeds make
+the clock tick backwards.
 
 ### `Date.warp.reset()`
 
@@ -67,10 +79,11 @@ to the current *unwarped* date and time.
 
 The `on()` and `off()` functions, surprisingly, turn the clock warping on and
 off. Turning the warping off with `Date.warp.off()` will not reset or pause the
-warped clock; it will simply reinstate the original `Date` object, allowing it
+warped clock; it will simply redefine the original `Date` object, allowing it
 to report actual *unwarped* times. When `Date.warp.on()` is called, the warped
 `Date` object is replaced, and it will report *warped* times at the previously
-set speed as if warping had not been turned off at all.
+set speed from the previous warped datetime as if warping had not been turned
+off at all.
 
 ### `Date.warp.date`
 
