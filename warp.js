@@ -54,7 +54,7 @@
       },
 
       warped = function() {
-        if ((this instanceof Window))
+        if (this !== warped.warp && !(this instanceof Date))
           return '' + new date(warpTimestamp());
 
         var args = arguments;
