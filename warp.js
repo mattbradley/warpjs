@@ -82,7 +82,19 @@
   warped.warp = Date.warp = {
     jump: function(amount) {
       var newDate = new date(then),
-          addMs = function(ms) { newDate = newDate.setMilliseconds(newDate.getMilliseconds() + ms); };
+          addMs = function(ms) { newDate.setMilliseconds(newDate.getMilliseconds() + ms); };
+
+      if (typeof amount == 'number') {
+        addMs(amount);
+        return then = +newDate;
+      }
+
+      if (typeof amount == 'string') {
+        var tokens = amount.match(/(-?(\d+\.?\d*|\d*\.?\d+)[A-Za-z]+)/g);
+        amount = { };
+        for (var t in tokens)
+          amount[tokens[t].replace(/[-+.0-9]/g, '')] = parseFloat(tokens[t]);
+      }
 
       for (var unit in amount) {
         var num = amount[unit];
@@ -109,7 +121,7 @@
         }
       }
 
-      then = +newDate;
+      return then = +newDate;
     },
     setSpeed: function(speed) {
       tickSpeed = speed;
