@@ -7,7 +7,8 @@ the current, lousy, depressing date and time, you can set the JavaScript clock
 to whatever date and time you wish! You can also specify how fast the clock
 ticks, making time on your website go by super-fast or extra-slow. You can even
 make time go backwards! Warp.js is great for testing front-end timestamps,
-confusing your visitors, or reliving your website's heyday in the late 1990s.
+"syncing" a browser's clock with your server's time, confusing your visitors,
+or reliving your website's heyday in the late 1990s.
 
 Usage
 -----
