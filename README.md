@@ -17,6 +17,8 @@ JavaScript clock. These functions allow you to set the time and date of the
 clock and control how fast the clock ticks. Also, the `Date.now()` function and
 `new Date()` constructor are replaced. These will now return a *warped*
 timestamp or `Date` object based on the clock tick speed and the set datetime.
+The `Date` object works just like the standard object until you warp the clock
+using the functions provided in `Date.warp`, described below.
 
 ### `Date.now([unwarped])`
 
@@ -60,7 +62,7 @@ method.
 The `clock()` function gets or sets the warped date and time of the clock.
 Sending no arguments will return the current *warped* `Date` object. This
 function accepts the same arguments as the `new Date()` constructor and will
-set the warped clock based on `Date` object created with those arguments. A
+set the warped clock based on the `Date` object created with those arguments. A
 single argument of `true` will set the clock to the actual unwarped datetime.
 
 ### `Date.warp.speed([speed])`
@@ -73,9 +75,9 @@ the clock tick backwards.
 
 ### `Date.warp.jump(amount)`
 
-The `jump()` function will move the clock forwards or backwards based on what
-value is passed to the `amount` parameter. If `amount` is a number, then the
-clock will be moved forwards (or backwards for negative numbers) that many
+The `jump()` function will move the clock forwards or backwards based on the
+value passed to the `amount` argument. If `amount` is a number, then the clock
+will be moved forwards (or backwards for negative numbers) that many
 milliseconds.
 
 An object argument can supply amounts paired with any or all of eight possible
@@ -89,7 +91,7 @@ how many of that unit to add or subtract. For instance:
       'hours': -8.5
     });
 
-will jump forwards 2 years and 15 days, then backwards 8.5 hours. You're not
+will jump forward 2 years and 15 days, then backward 8.5 hours. You're not
 restricted to using the long-form unit names: you're free to use names such as
 `yr` for years and `h` for hours. Pretty much any abbreviation you can think of
 will be properly parsed. See below for the full unit name list. Using more than
@@ -115,7 +117,7 @@ time:
 *Notice*: be careful when using a dash as a delimiter. Put spaces around it so
 it's not confused as a negative sign on your numbers.
 
-Unit name list:
+**Unit name list:**
  * year: `y`, `yr`, `yrs`, `year`, `years`
  * month: `mo`, `mos`, `month`, `months`
  * week: `w`, `wk`, `wks`, `week`, `weeks`
@@ -125,7 +127,7 @@ Unit name list:
  * second: `s`, `sec`, `secs`, `second`, `seconds`
  * millisecond: `ms`, `milli`, `millis`, `millisecond`, `milliseconds`
 
-Note that short unit `m` is reserved for minute; month uses `mo` and
+Note that the short unit `m` is reserved for minute; month uses `mo` and
 millisecond uses `ms`.
 
 ### `Date.warp.reset()`
