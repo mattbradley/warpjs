@@ -91,10 +91,10 @@
       }
 
       if (typeof amount == 'string') {
-        var tokens = amount.match(/(-?(\d+\.?\d*|\d*\.?\d+)[A-Za-z]+)/g);
+        var tokens = amount.toLowerCase().match(/(-?(\d+\.?\d*|\d*\.?\d+)\s*[a-z]+)/g);
         amount = { };
         for (var t = 0; t < tokens.length; t++)
-          amount[tokens[t].replace(/[-+.0-9]/g, '')] = parseFloat(tokens[t]);
+          amount[tokens[t].replace(/[^a-z]/g, '')] = parseFloat(tokens[t]);
       }
 
       for (var unit in amount) {
@@ -108,11 +108,11 @@
           case mo:
             newDate.setMonth(newDate.getMonth() + num); break;
           case w:
-            addMs(6.048e8 * num); break;
+            addMs(6048e5 * num); break;
           case d:
-            addMs(8.64e7 * num); break;
+            addMs(864e5 * num); break;
           case h:
-            addMs(3.6e6 * num); break;
+            addMs(36e5 * num); break;
           case m:
             addMs(6e4 * num); break;
           case s:
