@@ -32,6 +32,7 @@ The replaced `Date` constructor can be invoked the [same ways]
 that the actual constructor can be invoked:
 
     new Date()
+    new Date(true)
     new Date(dateObject)
     new Date(millisecond)
     new Date(dateString)
@@ -39,7 +40,7 @@ that the actual constructor can be invoked:
 
 Instantiating a new `Date` object with the default, zero-argument constructor
 will return a `Date` object that represents the warped date and time of the
-clock. The other three constructors work as expected: they return a `Date`
+clock. The other standard constructors work as expected: they return a `Date`
 object that represents the time based on the supplied arguments.
 
 Similar to the `Date.now()` function, if the first argument is `true`, the
@@ -69,6 +70,63 @@ no arguments will return the current tick speed. The `speed` argument can be
 thought of as a multiplicative factor: setting the speed to 2 will make the
 clock tick at 2 seconds per second -- or twice as fast. Negative speeds make
 the clock tick backwards.
+
+### `Date.warp.jump(amount)`
+
+The `jump()` function will move the clock forwards or backwards based on what
+value is passed to the `amount` parameter. If `amount` is a number, then the
+clock will be moved forwards (or backwards for negative numbers) that many
+milliseconds.
+
+An object argument can supply amounts paired with any or all of eight possible
+units: years, months, weeks, days, hours, minutes, seconds, milliseconds. A key
+in the object defines the unit, and the value associated with that key defines
+how many of that unit to add or subtract. For instance:
+
+    Date.warp.jump({
+      'years': 2,
+      'days': 15,
+      'hours': -8.5
+    });
+
+will jump forwards 2 years and 15 days, then backwards 8.5 hours. You're not
+restricted to using the long-form unit names: you're free to use names such as
+`yr` for years and `h` for hours. Pretty much any abbreviation you can think of
+will be properly parsed. See below for the full unit name list. Using more than
+one abbreviation for a single unit will add both of the amounts. For example:
+`Date.warp.jump({'y': 5, 'yr': 3})` will jump ahead 8 years.
+
+A string argument works similarly to the object argument, except that the
+amount and unit tokens are next to each other in a string. You can use any
+delimiter you want (or no delimiter at all) between the amount/unit pairs, and
+you can even use spaces between the amount and unit, just as long as the amount
+token and unit token are next to each other. For instance, the following
+strings are all parsed correctly and jump the clock the expected amount of
+time:
+
+    Date.warp.jump('1hour2minutes30seconds');
+    Date.warp.jump('-25yr +3d -5.5hr');
+    Date.warp.jump('1year - 6.mo,-.5day_1.5hrs');
+    Date.warp.jump('Jump the clock 6 Months, 2 Weeks, and -1.5 Days');
+
+*Notice*: using the same unit twice will add both amounts. For example,
+`Date.warp.jump('6hours 30min 1hr')` will jump ahead 7 hours and 30 minutes.
+
+*Notice*: be careful when using a dash as a delimiter. Put spaces around it so
+it's not confused as a negative sign on your numbers.
+
+Unit name list:
+ * year: `y`, `yr`, `yrs`, `year`, `years`
+ * month: `mo`, `mos`, `month`, `months`
+ * week: `w`, `wk`, `wks`, `week`, `weeks`
+ * day: `d`, `day`, `days`
+ * hour: `h`, `hr`, `hrs`, `hour`, `hours`
+ * minute: `m`, `min`, `mins`, `minute`, `minutes`
+ * second: `s`, `sec`, `secs`, `second`, `seconds`
+ * millisecond: `ms`, `milli`, `millis`, `millisecond`, `milliseconds`
+
+Note that short unit `m` is reserved for minute; month uses `mo` and
+millisecond uses `ms`.
 
 ### `Date.warp.reset()`
 
