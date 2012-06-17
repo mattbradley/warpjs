@@ -73,6 +73,10 @@
         }
       };
 
+  // Make warped Date objects spoof real Date objects,
+  // so that instanceof works correctly
+  warped.prototype = Date.prototype;
+
   warped.now = function(unwarped) {
     return unwarped? now() : warpTimestamp();
   };
